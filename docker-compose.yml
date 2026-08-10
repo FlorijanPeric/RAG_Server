@@ -1,0 +1,54 @@
+services:
+  qdrant:
+    image: qdrant/qdrant:latest
+    ports:
+      - "${QDRANT_HOST_PORT:-6333}:6333"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    restart: unless-stopped
+
+  ollama:
+    build: ./ollama
+    ports:
+      - "${OLLAMA_HOST_PORT:-11434}:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    environment:
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-llama3.2}
+    restart: unless-stopped
+    # Uncomment to use an NVIDIA GPU (requires the NVIDIA Container Toolkit):
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
+
+  rag-api:
+    build: .
+    ports:
+      - "${RAG_API_HOST_PORT:-8000}:8000"
+    environment:
+      EMBEDDING_MODE: ${EMBEDDING_MODE:-local}
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-sentence-transformers/all-MiniLM-L6-v2}
+      EMBEDDING_API_URL: ${EMBEDDING_API_URL:-}
+      EMBEDDING_API_KEY: ${EMBEDDING_API_KEY:-}
+      EMBEDDING_API_MODEL: ${EMBEDDING_API_MODEL:-}
+      QDRANT_URL: http://qdrant:6333
+      QDRANT_COLLECTION: ${QDRANT_COLLECTION:-Beees}
+      OLLAMA_URL: http://ollama:11434
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-llama3.2}
+      AUTO_INGEST_ENABLED: ${AUTO_INGEST_ENABLED:-true}
+      AUTO_INGEST_DIR: ${AUTO_INGEST_DIR:-dataset}
+    volumes:
+      - hf_cache:/root/.cache/huggingface
+    depends_on:
+      - qdrant
+      - ollama
+    restart: unless-stopped
+
+volumes:
+  qdrant_data:
+  ollama_data:
+  hf_cache:

@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>RAG Chat</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #0f1115;
+    --panel: #171a21;
+    --border: #2a2e37;
+    --text: #e7e9ee;
+    --muted: #8b90a0;
+    --accent: #5b8cff;
+    --user-bubble: #2a3a63;
+    --bot-bubble: #1f232c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  header {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  header h1 { font-size: 16px; margin: 0; }
+  .controls { display: flex; align-items: center; gap: 14px; font-size: 13px; color: var(--muted); }
+  .controls label { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+  main {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .msg { max-width: 70ch; padding: 10px 14px; border-radius: 12px; line-height: 1.45; white-space: pre-wrap; }
+  .msg.user { align-self: flex-end; background: var(--user-bubble); }
+  .msg.bot { align-self: flex-start; background: var(--bot-bubble); border: 1px solid var(--border); }
+  .msg.system { align-self: center; color: var(--muted); font-size: 13px; }
+  .sources { margin-top: 8px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); padding-top: 6px; }
+  .sources details summary { cursor: pointer; }
+  .mode-tag { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 6px; background: var(--border); color: var(--muted); margin-bottom: 6px; }
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 12px 20px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  form { display: flex; gap: 10px; flex: 1; }
+  input[type=text] {
+    flex: 1;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--panel);
+    color: var(--text);
+    font-size: 14px;
+  }
+  button {
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: none;
+    background: var(--accent);
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  button:disabled { opacity: 0.5; cursor: default; }
+  button.secondary { background: var(--panel); border: 1px solid var(--border); color: var(--text); }
+  #pdf-input { display: none; }
+  #status { font-size: 12px; color: var(--muted); }
+</style>
+</head>
+<body>
+<header>
+  <h1>RAG Chat</h1>
+  <div class="controls">
+    <span id="status"></span>
+    <label><input type="checkbox" id="use-llm" checked /> Use LLM (Ollama)</label>
+    <button class="secondary" id="upload-btn" type="button">Upload PDF</button>
+    <input type="file" id="pdf-input" accept="application/pdf" />
+  </div>
+</header>
+
+<main id="chat"></main>
+
+<footer>
+  <form id="ask-form">
+    <input type="text" id="question" placeholder="Ask something about your documents..." autocomplete="off" required />
+    <button type="submit" id="send-btn">Ask</button>
+  </form>
+</footer>
+
+<script>
+const chat = document.getElementById("chat");
+const form = document.getElementById("ask-form");
+const questionInput = document.getElementById("question");
+const sendBtn = document.getElementById("send-btn");
+const useLlmCheckbox = document.getElementById("use-llm");
+const uploadBtn = document.getElementById("upload-btn");
+const pdfInput = document.getElementById("pdf-input");
+const statusEl = document.getElementById("status");
+
+function addMessage(role, text) {
+  const el = document.createElement("div");
+  el.className = "msg " + role;
+  el.textContent = text;
+  chat.appendChild(el);
+  chat.scrollTop = chat.scrollHeight;
+  return el;
+}
+
+function addBotAnswer(payload) {
+  const el = document.createElement("div");
+  el.className = "msg bot";
+
+  const tag = document.createElement("div");
+  tag.className = "mode-tag";
+  tag.textContent = payload.mode === "llm" ? "LLM answer" : "Extractive answer";
+  el.appendChild(tag);
+
+  const answer = document.createElement("div");
+  answer.textContent = payload.answer;
+  el.appendChild(answer);
+
+  if (payload.contexts && payload.contexts.length) {
+    const sources = document.createElement("div");
+    sources.className = "sources";
+    const details = document.createElement("details");
+    const summary = document.createElement("summary");
+    summary.textContent = `${payload.contexts.length} source chunk(s)`;
+    details.appendChild(summary);
+    payload.contexts.forEach((ctx, i) => {
+      const p = document.createElement("div");
+      p.style.marginTop = "6px";
+      const src = (ctx.metadata && ctx.metadata.source) || "unknown";
+      p.textContent = `[${i + 1}] (${src}, score ${ctx.score.toFixed(3)}) ${ctx.text.slice(0, 240)}`;
+      details.appendChild(p);
+    });
+    sources.appendChild(details);
+    el.appendChild(sources);
+  }
+
+  chat.appendChild(el);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const question = questionInput.value.trim();
+  if (!question) return;
+
+  addMessage("user", question);
+  questionInput.value = "";
+  sendBtn.disabled = true;
+  statusEl.textContent = "Thinking...";
+
+  try {
+    const response = await fetch("/ask", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        question,
+        top_k: 4,
+        use_llm: useLlmCheckbox.checked,
+      }),
+    });
+    if (!response.ok) {
+      const errText = await response.text();
+      throw new Error(errText || response.statusText);
+    }
+    const payload = await response.json();
+    addBotAnswer(payload);
+  } catch (error) {
+    addMessage("system", "Error: " + error.message);
+  } finally {
+    sendBtn.disabled = false;
+    statusEl.textContent = "";
+  }
+});
+
+uploadBtn.addEventListener("click", () => pdfInput.click());
+
+pdfInput.addEventListener("change", async () => {
+  const file = pdfInput.files[0];
+  if (!file) return;
+
+  statusEl.textContent = `Ingesting ${file.name}...`;
+  addMessage("system", `Uploading and ingesting: ${file.name}`);
+
+  const formData = new FormData();
+  formData.append("file", file);
+
+  try {
+    const response = await fetch("/ingest/pdf", { method: "POST", body: formData });
+    if (!response.ok) {
+      const errText = await response.text();
+      throw new Error(errText || response.statusText);
+    }
+    const payload = await response.json();
+    addMessage("system", `Ingested ${file.name}: ${payload.chunks_added} chunk(s) added.`);
+  } catch (error) {
+    addMessage("system", "Upload error: " + error.message);
+  } finally {
+    statusEl.textContent = "";
+    pdfInput.value = "";
+  }
+});
+</script>
+</body>
+</html>

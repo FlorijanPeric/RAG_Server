@@ -1,0 +1,561 @@
+# Source: dataset/questions/NABOR VPRASANJ NIZJA STOPNJA.pdf
+
+1
+NABOR VPRAŠANJ ZA TEKMOVANJE MLADIH ČEBELARJEV SLOVENIJE
+NIŽJA STOPNJA – 1-6 RAZRED OSNOVNE ŠOLE
+1. Iz katerih glavnih delov je sestavljeno telo čebele?
+2. Kolikšna je temperatura v panju, ko je v njem zalega?
+3. Koliko cvetnega prahu potrebuje čebelja družina letno za svoj razvoj?
+4. Za kaj nam služijo čebelarske vilice?
+5. Kako imenujemo prvi spomladanski izlet čebel?
+6. Kdo skrbi v sodobnem čebelarjenju za obnovo satja?
+7. Kako čebele gradijo satje v panju?
+8. S katerimi barvami označujemo matice?
+9. Kateri člani živijo v čebeljih združbah?
+10. Katera dela opravlja mlada čebela v panju preden postane stražarka?
+11. Kaj nabirajo čebele v naravi in prinašajo v panj?
+12. Koliko časa traja razvoj čebeljega jajčeca?
+13. Na katerem delu čebeljega telesa so pritrjena krila in noge?
+14. Zakaj so čebele pomembne za kmetijstvo?
+15. Katera matica zapusti panj s prvim rojem?
+16. Kakšna jajčeca zalega matica?
+17. Kako se čebele spoznavajo?
+18. Ali lahko umre človek od enega čebeljega pika?
+19. Kako svetloba deluje na med?
+20. Kdaj je matica najbolj plodna?
+21. Kaj se izleže iz oplojenega jajčeca?
+22. Kakšno je pravilno zaporedje razvojnih obdobij čebele?
+23. Katerim čebelam pravimo dojilje?
+24. Kaj ima čebela na glavi?
+25. Iz kolikih vidnih obročkov je sestavljen zadek čebele?
+26. Da obogatimo čebeljo pašo sejemo:
+27. Kdo povzroča manino pašo?
+28. Koliko vode letno potrebuje čebelja družina?
+29. Kako shranjujemo med?
+30. Za kaj nam služi sončni topilnik?
+31. Kaj je čebelarjenje?
+32. V katerem slovenskem kraju je znani čebelarski muzej?
+33. Kje ima čebela čutilo za voh?
+34. V katerem kraju je Čebelarski center Slovenije?
+35. Kaj napravijo čebele z medom, ko je dovolj zrel?
+36. Koliko kg medu porabi srednje razvita čebelja družina v enem letu?
+37. Katere barve vidijo čebele?
+38. Obkroži svetle sortne medove!
+39. Kateri plenilci ogrožajo čebele?
+40. Kako imenujemo čebeljo družino, iz katere izleti roj?
+41. Obkroži črko pred popolnim imenom AŽpanja!
+42. Kam pritrdi matica jajčece, ko ga iztisne iz zadka?
+43. Med katere živali uvrščamo čebele?
+44. Kako je sestavljeno želo čebele?
+45. Na kateri rastlini naberejo čebele prvi cvetni prah?
+46. Na katerih rastlinah najdejo čebele manino pašo?
+47. Kakšen je kostanjev med?
+48. Kateri navedeni škodljivci čebel živijo zunaj panja?
+49. Kaj potrebuje čebelar pri točenju medu?
+
+2
+50. Kako se čebele naravno razmnožujejo?
+51. Kaj uničuje voščena vešča?
+52. Kaj so sestavni deli nakladnega panja?
+53. Koliko oči ima čebela?
+54. Iz česa čebele gradijo satje?
+55. Katere vrste celic gradijo čebele?
+56. Koliko časa traja razvoj matice?
+57. Kakšno hrano uživa ličinka matice?
+58. Česa pozimi ni v družini?
+59. Koliko trotov živi poleti v normalni družini?
+60. Kako sporočajo čebele nabiralke ostalim čebelam, kje je paša?
+61. Kaj je opazovalni panj?
+62. Kaj počnejo čebele pozimi?
+63. Kaj naredijo čebele na prvih izletnih dneh spomladi?
+64. Kaj pospešuje rojenje?
+65. Kako čebele prinesejo v panj cvetni prah?
+67. Kakšna je naloga voskovnih žlez?
+68. S čim čebele dihajo?
+69. Kako še drugače imenujemo medonosno čebelo?
+70. Kaj vsebuje med?
+71. Obkroži nepravilne trditve:
+72. Kateri slovenski čebelar je pred večkot 200 leti vodil dvorno čebelarstvo na Dunaju in je
+bil prvi čebelarski učitelj?
+73. Kateri član čebelje družine normalno zalega jajčeca?
+74. Kako se imenuje vrsta čebele, ki izvira iz naših krajev?
+75. Zakaj čebelar uporablja zaščitno pokrivalo z mrežo?
+76. Kako se imenuje glasilo slovenskih čebelarjev
+77. Iz kakšnega jajčeca se razvije in izleže matica?
+78. Katera čebelja bolezen povzroča največjo gospodarsko škodo?
+79. Koliko parov kril ima čebela?
+80. Katere rastline nudijo čebelam obilo medičine?
+81. S čim srka čebela medičino – tekočino?
+82. Katere pripomočke potrebuje čebelar pri točenju medu?
+83. Kje so tipalnice čebele delavke?
+84. V katerem delu AŽpanja se običajno nahaja matica z zalego?
+85. Kako imenujemo vmesni prazen prostor med sati v panju?
+86. Kako imenujemo celico, iz katere se izleže matica
+87. Kaj se razvije iz jajčeca?
+88. Anton Janša se je rodil 20. maja 1734 v:
+89. Ali lahko čebela giblje noge v vse smeri?
+90. Katero vedenje se odvija na sliki?
+91. Kaj vidimo na sliki?
+
+3
+
+
+# Source: dataset/questions/VPRASANJA VISJA SKUPINAa.pdf
+
+1
+VPRAŠANJA IZ SNOVI ZA PRIPRAVO
+NA TEKMOVANJE MLADIH ČEBELARJEV SLOVENIJE
+ZA VIŠJO SKUPINO (srednješolci)
+1. Kdaj je nastal najstarejši prikaz človekovega odnosa do čebel in kje so ga odkrili? (1)
+a. Pred 10 tisočleti v Španiji
+b. Pred 40 do 50 tisočlet v Altamiri
+c. Pred 20 do 30 tisočleti v Valenciji
+2. Kateri trije tipi čebelnjakov so se izoblikovali pri nas in so še danes posebnost
+slovenskega čebelarjenja? (1)
+a. Alpski, kraški, prekmurski
+b. Alpski, celinski, kraški
+c. Alpski, dinarski, celinski
+3. Kdaj je postal Anton Janša dvorni učitelj čebelarstva na čebelarski šoli na Dunaju? (1)
+a. 1769
+b. 1770
+c. 1773
+4. Kateri knjigi o čebelarjenju in čebelah je napisal Anton Janša?(1)
+a. Razprava o rojenju in Popolni nauk o čebelarstvu
+b. Razprava o čebelarstvu in Popolni nauk o rojenju
+c. Čebeloreja in čebelarstvo
+5. Kdaj smo Slovenci dobili prvo slovensko čebelarsko knjigo in katera je to bila? (1)
+a. Leta 1777 knjiga Popolni nauk o čebelarstvu
+b. Leta 1779 knjiga Popolnoma podvuzhenje sa vsse zhebellarje
+c. Leta 1792 knjiga Popolnoma podvuzhenje sa vsse zhebellarje
+6. Kaj je trdil Peter Pavel Glavar? (1)
+a. Da se matica oplodi zunaj panja
+b. Da se matica pari z večtroti
+c. Da so troti samci, ki oplodijo matico
+7. Kdaj se je pojavil panj s premičnim satjem? (1)
+a. Leta 1892
+b. Leta 1815
+c. V 19. stoletju
+8. Zapiši velikost AŽ – satnika. (1)
+a. 232 x 480 x 20
+b. 260 x 410 x 25
+
+2
+c. 160 x 480 x 25
+9. Po kom se imenuje AŽpanj? (1)
+a. Anton Žnidaršičev
+b. Alberti Žnidaršičev
+c. Abieri Žnidaršičev
+10. Kolikšna je velikost satnika v LR panjih (velika naklada)? (1)
+a. 480 x 232
+b. 448 x 232
+c. 410 x 260
+11. Po kom se imenuje LR panj? (1)
+a. Po Lorenzu Langstrothu
+b. Po Langstrothu in Roothu
+c. Po Langstrothu in Roosu
+12. Kakšen panj uporablja največ čebelarjev na svetu? (1)
+a. kranjič
+b. AŽ- panj
+c. panj s premičnim satjem
+d. Kirarjev panj
+13. Iz katerih delov je sestavljen nakladni panj? (1)
+a. Podstavka, podnice, naklad, pokrov.
+b. Iz naklad, žrela, notranjega pokrova, strehe, matične rešetke.
+c. Iz podnice z žrelom, naklad, notranjega in zunanjega pokrova, strehe.
+14. Za kaj nam služi sončni topilnik? (1)
+a. za topljenje kristaliziranega medu
+b. služi nam kot sončni kolektor
+c. za topljenje voščin
+15. Kaj spada v osebno zaščitno opremo čebelarja? (1)
+a. Zaščitno pokrivalo, svetla obleka, rokavice,
+b. Zaščitno pokrivalo, rokavice, kadilnik
+c. Eterično olje, zaščitno pokrivalo, kadilnik, svetla obleka , rokavice
+16. Obkroži pravilno trditev? (1)
+a. Smukalnik je čebelarsko orodje, ki služi nabiranju cvetnega prahu.
+b. S smukalnikom nabiramo izkopanec.
+c. S smukalnikom lahko nabiramo cvetni prah in propolis.
+17. Katero je latinsko ime pasme čebel, ki izvira iz naših krajev? (1)
+
+3
+a. Apis mellifera carniolica
+b. Apis mellifica carnica
+c. Apis mellifera carnica
+d. Apis mellifica carniolica
+18. Katera dela opravlja čebela delavka po vrsti v panju, preden začne leteti na pašo? (1)
+a. Čiščenje celic, nega zalege, graditev satja, spremljanje matice, skladiščenje hrane, straža
+panja
+b. Čiščenje celic, nega zalege, spremljanje matice, graditev satja, skladiščenje hrane, straža
+panja
+c. Čiščenje celic, nega zalege, skladiščenje hrane, graditev satja, spremljanje matice, straža
+panja
+19. Kaj nabirajo čebele v naravi in prinašajo v panj? (1)
+a. Med, cvetni prah, medičino, mano, propolis
+b. Cvetni prah, nektar, vodo, med, propolis
+c. Medičino, cvetni prah, mano, vodo, propolis
+20. Kako veliko je čebelje jajčece? (1)
+a. 1 cm
+b. 1,2 – 1,5 cm
+c. Manj kot 1 cm
+21. Koliko časa traja razvoj jajčeca? (1)
+a. 24 ur
+b. 72 ur
+c. 78 ur
+22. Kaj je deviška rodnost? (1)
+a. Sposobnost matice, da leže jajčeca
+b. Sposobnost matice, da za celo življenje shrani spermo trotov.
+c. Možnost, da se iz neoplojenega jajčeca razvije spolen osebek.
+23. Koliko jajčec dozori v jajčnikih matice v enem dnevu? (1)
+a. 8
+b. 2000-3000
+c. Odvisno od tega, koliko stara je matica.
+24. Koliko spermijev ima oplojena matica v semenski mošnjici? (1)
+a. 8 milijonov
+b. 80 milijonov
+c. 800 milijonov
+25. Kje se oplodi matica? (1)
+
+4
+a. 1 m stran od panja
+b. Na žrelu panja
+c. Na posebnih mestih, zunaj panja, ki jim rečemo trotišča.
+26. Kolikokrat poveča larva ali žerka svojo težo v času svojega razvoja? (1)
+a. 400 krat
+b. 500 krat
+c. 600 krat
+27. Koliko so stari troti, ko spolno dozorijo? (1)
+a. 5 do 10 dni
+b. 8 do 10 dni
+c. 11 do 15 dni
+28. Koliko stara matice se plemeni? (1)
+a. Takoj po izleganju
+b. 5-6 dan po izleganju
+c. Po treh tednih
+29. Barve za označevanje matic so predpisane. Obkroži pravilen odgovor! (1)
+a. 2005 – rumena
+b. 2006 - bela
+c. 2007 – zelena
+d. 2008 - modra
+30. S čim čebele dihajo? (1)
+a. Z zračnicami
+b. S pljuči
+c. Z Malpighijevimi cevkami
+31. Kako dolgo živijo čebele pozimi? (1)
+a. okrog 40 dni
+b. okrog 100 dni
+c. okrog 150 dni
+32. Kakšna je najnižja temperatura zimske gruče na obrobju? (1)
+a. 8 ° C
+b. 10 ° C
+c. 18 ° C
+33. Kaj je preleganje matice? (1)
+a. preobilno zaleganje matice
+b. zaleganje trotovine
+
+5
+c. pojav, ko čebele same brez rojenja zamenjajo matico
+34. Kaj povzroči preleganje matice? (1)
+a. Slaba paša
+b. Matica slabo zalega in ne izloča dovolj feromonov
+c. Priprave na roj
+35. Kateri vzroki pospešijo rojenje? (1)
+a. Naraščanje števila čebel, slab prenos feromonov, dobra pelodna paša
+b. Dobra nektarna paša, trotovska zalega, slab prenos feromonov
+c. Naraščanje števila čebel, hladna pomlad, zmanjšana prehodnost panjskih ulic, slab prenos
+feromonov
+36. Kaj izloča matica, da so čebele pravilno aktivne? (1)
+a. Fermone
+b. Feromone
+c. Nasanov hormon
+37. Koliko časa pred glavno pašo čebelarji pričnejo pripravljati čebele, da bodo imeli boljši
+donos medu?
+a. najmanj 20 dni
+b. najmanj 30 dni
+c. najmanj 40 dni
+d. najmanj 50 dni
+38. Kako čebele nabiralke ostalim čebelam sporočajo, kje je paša? (1)
+a. s tipalnicami
+b. s plesom
+c. z brenčanjem
+39. Kaj povzroča nalezljive bolezni? (1)
+a. Virusi, bakterije, glivice, plesni
+b. Bakterije, virusi, glivice, praživali
+c. Bakterije, virusi, pršice, glivice, plesni
+40. Katere čebelje bolezni povzročajo bakterije? (1)
+a. Huda gniloba, pohlevna gniloba, septikemija
+b. Huda gniloba, pohlevna gniloba, gregarine
+c. Mešičkasta zalega, pohlevna gniloba, poapnela zalega
+41. Katere čebelje bolezni povzročajo zajedavci? (1)
+a. Woodoza, akaroza, tropileloza
+b. Varoza, nosemavoza, tropileloza
+c. Varoza, akaroza, tropileloza
+
+6
+42. Za čim obolevajo čebele na sliki? (1)
+a. Nosemavost
+b. Virus popačenih kril
+c. Tropileloza
+43. Katere bolezni povzročajo glivice? (1)
+a. Poapnela zalega, okamnela zalega, melanoza
+b. Hudna gniloba zelege, pohlevna gniloba, melanoza
+c. Septikemija, poapnela zalega, okamnela zalega
+44. Katere so nenalezljive bolezni čebel? (1)
+a. Majska bolezen, varoza, deformacija kril
+b. Prehlajena zalega, pregreta zalega, griža čebel
+c. Pregreta zalega, prehlajena zalega, paraliza čebel
+45. S čim razkužujemo čebelarski pribor, če so čebele zbolele za hudo gnilobo? (1)
+a. Natrijev ali kalijev lug, obžiganje
+b. Natrijev propionat, benzoat
+c. Askorbinska in ocetna kislina
+46. Kaj so viri okužbe čebel s hudo gnilobo? (1)
+a. Zapuščeni čebelnjaki, hrana, najdeni roji
+b. Roparske družine, hrana, virusi, roji
+c. Med, plesni, zapuščeni čebelnjaki, roparske družine
+47. Katera od čebeljih bolezni je nevarna tudi človeku? (1)
+a. Huda gniloba
+b. Okamenela zalega
+c. Poapnela zalega.
+48. Katere čebelje organe napadajo povzročitelji nosemavosti? (1)
+a. živčevje
+b. hitinasti ovoj
+c. prebavne organe
+d. žleze z notranjim izločanjem
+
+
+7
+49. Kdo povzroča v zadnjih letih največ škode v čebelarstvu? (1)
+a. Varroa jacobsoni
+b. Varroa destructor
+c. Varroa jestructor
+d. Varroa decobsoni
+50. Kaj uporabljamo za zaščito satja pred voščeno veščo? (2)
+a. Oksalno kislino
+b. Mravljično kislino
+c. Zmrzovanje
+d. Paradiklorbenzol
+51. Kaj uporabljamo za razkuževanje satja, če so čebele okužene s hudo gnilobo? (1)
+a. Lug
+b. Zmrzovanje
+c. Sežgemo ga
+52. Koliko dni stare čebele napada pršica? (1)
+a. do 5 dni
+b. od 5 do 10 dni
+c. od 5 do 10 dni
+53. Kdo povzroča pršičavost? (1)
+a. Varoa jakopsoni
+b. Acar-apis woodi
+c. Ascosphera apis
+54. Kako se imenuje bakterija, ki povzroča hudo gnilobo? (1)
+a. Baccillus apis
+b. Apis larve
+c. Bacillus larvae
+55. Katera zdravila dovoljuje veterinar za zatiranje varoze čebel? (2)
+a. Hemovar
+b. Perizin
+c. Oksalno kislino
+d. Bayvarol
+56. Kaj povzroči majsko bolezen? (1)
+a. Bakterija
+b. Pražival
+c. Premalo vode
+57. Po čem določamo (ugotavljamo) zrelost medu v satju? (1)
+
+8
+a. po barvi medu
+b. po povr šini pokritega medu
+c. po zaleženosti trotovskih celic
+d. po koli čini cvetnem prahu v satju
+58. Kaj je vir nastanka mane? (1)
+a. Nektariji
+b. Floemski sok
+c. Ksilemski sok
+59. Katere snovi najbolj primanjkuje v panju spomladi? (1)
+a. vode
+b. medu
+c. cvetnega prahu
+d. propolisa
+60. Na čem temelji pelodna analiza medu? (1)
+a. na barvi medu
+b. na velikosti molekul
+c. na različnosti pelodnih zrnc
+61. Kdaj je najprimerneje delati s čebelami? (1)
+a. popoldan ko je močno oblačno
+b. po dežju zvečer
+c. ko je največpašnih čebel na paši
+62. V katerem letnem času so čebelje družine najšibkejše? (1)
+a. pozno spomladi
+b. poleti
+c. jeseni
+63. Ali ustavimo rojilno razpoloženje v čebelji družini, če jim odstranimo vse matičnike? (1)
+a. ne
+b. da
+c. z izrezovanjem matičnikov le zavremo rojilno razpoloženje
+64. Kateri sladkorji prevladujejo v medu? (1)
+a. glukoza in fruktoza
+b. saharoza in maltora
+c. melecitoza in saharoza
+65. Zakaj čebele s pokrovčki pokrijejo z medom napolnjene celice? (1)
+a. da se med ne pokvari
+
+9
+b. da se med ne razliva
+c. da ga zaščitijo pred plenilci
+66. Kakšno medičino ali nektar čebele najraje prinašajo v panj? (1)
+a. okrog 60 %
+b. okrog 70 %
+c. okrog 80 %
+d. okrog 90 %
+67. Kdaj se začne zgoščevanje nektarja in s tem prehod v zreli med? (1)
+a. ko pašna čebela nabere nektar na cvetu
+b. ko pašna čebela odda nektar panjskim čebelam
+c. ko pašna čebela odloži nektar v satno celico
+68. Kateri med je najbogatejši z rudninskimi snovmi? (1)
+a. Cvetlični
+b. Manin
+c. Mešan
+69. Katere vrste medu prištevamo k temnim vrstam? (2)
+a. Cvetlični
+b. Hojev
+c. Smrekov
+d. Akacijev
+70. Kateri med ni primeren za prezimovanje čebel? (1)
+a. Cvetlični
+b. Akacijev
+c. Manin
+71. Kako imenujemo prehajanje (razgrajevanje) saharoze v glukozo in fruktozo? (1)
+a. zorenje medu
+b. fermentiranje
+c. invertiranje
+72. Katera vrsta sladkorja zavira kristalizacijo medu? (1)
+a. fruktoza
+b. saharoza
+c. glukoza
+73. Kaj je fermentacija medu? (1)
+a. Zorenje medu.
+b. Vretje medu, ki je posledica prisotnosti kvasovk v medu.
+c. Pretvarjanje saharoze v glukozo in fruktozo.
+
+10
+74. Kakšne kvalitete je fermentirani med? (1)
+a. najboljše
+b. fermentacija ne vpliva na kvaliteto medu
+c. fermentiran med je pokvarjen
+75. Pri katerem medu je prisotna stalna nevarnost fermentacije medu? (1)
+a. pri zrelem medu
+b. pri nezrelem medu
+c. pri akacijevem medu
+76. Pri katerih obolenjih priporočajo uporabo cvetnega prahu? (1)
+a. Bolezni prostate, uravnavanju prebave, slabokrvnosti
+b. Psihični utrujenosti, izboljšanju spomina, zniževanju krvnega tlaka
+c. Bolezni jeter, izgubi apetita, raku na želodcu
+77. Med kakšna živila spada med? (1)
+a. med lahko prebavljiva živila
+b. med težko prebavljiva živila
+78. Kako shranjujejo čebelarji cvetni prah? (2)
+a. S sušenjem
+b. Z zamrzovanjem
+c. S segrevanjem
+79. Katere so sestavine cvetnega prahu? (1)
+a. Beljakovine, aminokisline, maščobe, minerali
+b. Veliko sladkorjev, beljakovine, aminokisline, minerali
+c. Melinin, Beljakovine, aminokisline, maščobe, minerali
+80. Pri kateri temperaturi se tali vosek? (1)
+a. od 58do 61C
+b. od 62do 64C
+c. od 65do 68
+d. od 69do 72C
+81. Kaj je izvor propolisa? (1)
+a. Med
+b. Smolnate snovi
+c. Cvetni prah
+82. Kaj je matični mleček? (1)
+a. Izloček goltnih žlez krmilk.
+
+11
+b. Izloček nasanove žleze krmilk.
+c. Izloček žrelne žleze matice.
+83. Kaj lahko zdravijo s čebeljim strupom? (1)
+a. Angino
+b. Ranice na koži
+c. Revmo
+d. Ustne afte
+84. Kaj so narejenci? (1)
+a. Narejenci so panji, ki jih uporabljamo predvsem za plemenitev matic.
+b. Narejenci so umetni roji.
+c. Narejence naredimo tako, da čebele ometemo v sedem satni panj.
+85. Koliko hrane porabijo približno čebele v zimski gruči v marcu? (1)
+a. 1,5 kg
+b. 2,5 kg
+c. 3,5 kg
+86. Po čem je znana pasma italijanska čebela (Apis m. ligustica)? (1)
+a. Da je rojiva, da je izredno medonosna, odporna na hudo gnilobo
+b. Da je izredno veliko propolizira, je mirna, izredno medonosna, dobro gradi satje
+c. Da je mirna, medonosna, dobro gradi satje
+87. Kaj se je zgodilo s čebelami na sliki? (1)
+a. Napadla jih je varoza.
+b. Pomor je posledica
+zastrupitve.
+c. Napadla jih je nosema.
+
+
+12
+88. Kaj predstavlja sličica? (1)
+a. Kepico cvetnega prahu
+b. Zrnce cvetnega prahu
+c. Seme bukve.
+89. Kaj predstavlja sličica? (1)
+a. Kaparja na smreki
+b. Hojevo ušico
+c. Medečega škržata
+90. Koliko oči ima čebela? (1)
+a. 2 para
+b. 3
+c. 5
+91. Katere žleze ima čebela? (5)
+a. Ščitnica
+b. Krmilne
+c. Strupne
+d. Voskovne
+e. Vonjavne
+f. Vidne
+g. Slinske
+92. Iz koliko členov so sestavljene noge čebele? (1)
+a. 4 členov
+b. 2 členov
+c. več členov
+93. Kako imenujemo čebeljo družino iz katere izleti roj? (1)
+a. nova družina
+b. roj
+c. izrojenec
+d. drujec
+
+
+13
+94. Kaj vidimo na sliki?
+a. bubo
+b. ličinko
+c. bubo matice
+95. Kaj počne čebela na sliki? (1)
+a. Praši se
+b. Straži panj
+c. Čaka na trota.
+96. Koliko stare čebele stražijo panj?
+a. 12-18
+b. 6-21
+c. 12-25
+d. 14-21
+97. Kaj v današnjem času ogroža čebele? (1)
+a. Bolezni, zastrupitve, čebelar
+b. Škodljivci, zastrupitve
+c. Bolezni, zajedavci, škodljivci, zastrupitve
+98. Kaj sporoča čebela s plesom v obliki osmice s pozibavajočim zadkom? (1)
+a. Smer, oddaljenost in kakovost paše.
+b. Smer paše, kakovost paše, količino hrane.
+c. Smer paše in oddaljenost.
+
+
+14
+
+
+# Source: dataset/questions/VPRASANJA20NIZJA20STOPNJA20PONAVLJANJE1.pdf
+
+
