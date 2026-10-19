@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """Terminal chat client for testing the RAG pipeline directly, no HTTP/UI involved.
 
-Talks to RAGPipeline in-process, using the same env vars (QDRANT_URL, OLLAMA_URL,
+Talks to RAGPipeline in-process, using the same env vars (QDRANT_URL, LLM_MODE,
 EMBEDDING_MODE, ...) as the web server. Prints full tracebacks on error instead of
 a generic "Internal Server Error", which makes it much easier to see what's
 actually failing (e.g. transient Qdrant connectivity) versus the web UI.
 
 Run on the server inside the running container to test against the real stack:
-    sudo docker compose exec rag-api python chat_cli.py
+    scripts/chat.sh   (or: docker compose exec web python chat_cli.py)
 
 Or locally (with QDRANT_URL/OLLAMA_URL pointed at a tunnel or local instance):
     source .venv/bin/activate
@@ -29,8 +29,9 @@ def main() -> None:
         print("Failed to initialize the pipeline:\n")
         traceback.print_exc()
         return
-    print(f"Ready. embedding_mode={pipeline.config.embedding_mode} "
-          f"qdrant_url={pipeline.config.qdrant_url} ollama_url={pipeline.config.ollama_url}\n")
+    print(f"Ready. embedder={pipeline.describe_embedder()} llm={pipeline.describe_llm()} "
+          f"retrieval={pipeline.describe_retrieval()} "
+          f"qdrant_url={pipeline.config.qdrant_url}\n")
 
     use_llm = True
 

@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="sl">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>RAG Chat</title>
+<title>RAG</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -27,7 +27,7 @@
     flex-direction: column;
   }
   header {
-    padding: 14px 20px;
+    padding: 12px 20px;
     border-bottom: 1px solid var(--border);
     display: flex;
     align-items: center;
@@ -36,8 +36,13 @@
     flex-wrap: wrap;
   }
   header h1 { font-size: 16px; margin: 0; }
-  .controls { display: flex; align-items: center; gap: 14px; font-size: 13px; color: var(--muted); }
+  .modes { display: inline-flex; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .modes button { border-radius: 0; background: var(--panel); color: var(--muted); padding: 7px 14px; font-size: 13px; }
+  .modes button.active { background: var(--accent); color: white; }
+  .controls { display: flex; align-items: center; gap: 14px; font-size: 13px; color: var(--muted); flex-wrap: wrap; }
   .controls label { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+  .controls input[type=number] { width: 52px; font: inherit; padding: 2px 4px; }
+  [hidden] { display: none !important; }
   main {
     flex: 1;
     overflow-y: auto;
@@ -46,30 +51,37 @@
     flex-direction: column;
     gap: 14px;
   }
-  .msg { max-width: 70ch; padding: 10px 14px; border-radius: 12px; line-height: 1.45; white-space: pre-wrap; }
+  .msg { max-width: 75ch; padding: 10px 14px; border-radius: 12px; line-height: 1.45; white-space: pre-wrap; }
   .msg.user { align-self: flex-end; background: var(--user-bubble); }
   .msg.bot { align-self: flex-start; background: var(--bot-bubble); border: 1px solid var(--border); }
   .msg.system { align-self: center; color: var(--muted); font-size: 13px; }
   .sources { margin-top: 8px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); padding-top: 6px; }
   .sources details summary { cursor: pointer; }
   .mode-tag { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 6px; background: var(--border); color: var(--muted); margin-bottom: 6px; }
+  .q-list { margin: 0; padding-left: 22px; white-space: normal; }
+  .q-list li { margin-bottom: 10px; }
+  .q-list .q { font-weight: 600; }
+  .q-list .a { color: var(--muted); margin-top: 2px; }
+  .copy-btn { margin-top: 4px; padding: 4px 10px; font-size: 12px; }
   footer {
     border-top: 1px solid var(--border);
     padding: 12px 20px;
-    display: flex;
-    gap: 10px;
-    align-items: center;
   }
-  form { display: flex; gap: 10px; flex: 1; }
-  input[type=text] {
+  form { display: flex; gap: 10px; align-items: flex-end; }
+  textarea {
     flex: 1;
+    min-height: 44px;
+    max-height: 40vh;
+    resize: vertical;
     padding: 10px 14px;
     border-radius: 10px;
     border: 1px solid var(--border);
     background: var(--panel);
     color: var(--text);
+    font: inherit;
     font-size: 14px;
   }
+  .hint { font-size: 12px; color: var(--muted); margin-top: 6px; }
   button {
     padding: 10px 16px;
     border-radius: 10px;
@@ -81,18 +93,25 @@
   }
   button:disabled { opacity: 0.5; cursor: default; }
   button.secondary { background: var(--panel); border: 1px solid var(--border); color: var(--text); }
-  #pdf-input { display: none; }
+  input[type=file] { display: none; }
   #status { font-size: 12px; color: var(--muted); }
 </style>
 </head>
 <body>
 <header>
-  <h1>RAG Chat</h1>
+  <h1>RAG</h1>
+  <div class="modes" role="tablist">
+    <button type="button" data-mode="answer" title="Vpišeš vprašanja, dobiš odgovore">Vprašanja → odgovori</button>
+    <button type="button" data-mode="questions" title="Vneseš tekst, dobiš vprašanja z odgovori">Tekst → vprašanja</button>
+  </div>
   <div class="controls">
     <span id="status"></span>
-    <label><input type="checkbox" id="use-llm" checked /> Use LLM (Ollama)</label>
-    <button class="secondary" id="upload-btn" type="button">Upload PDF</button>
-    <input type="file" id="pdf-input" accept="application/pdf" />
+    <label title="Koliko kosov besedila iz baze dobi LLM">Top-k <input type="number" id="top-k" min="1" max="50" /></label>
+    <label data-only="questions" title="Koliko vprašanj naj sestavi">Št. vprašanj <input type="number" id="num-questions" min="1" max="20" value="5" /></label>
+    <label data-only="questions" title="Za odgovore uporabi tudi dokumente iz baze"><input type="checkbox" id="use-context" checked /> Uporabi bazo</label>
+    <label data-only="answer"><input type="checkbox" id="use-llm" checked /> Uporabi LLM</label>
+    <button class="secondary" id="ingest-btn" type="button" title="Doda dokument v bazo znanja">Dodaj v bazo</button>
+    <input type="file" id="ingest-input" accept=".pdf,.txt,.docx,.xls" />
   </div>
 </header>
 
@@ -100,20 +119,63 @@
 
 <footer>
   <form id="ask-form">
-    <input type="text" id="question" placeholder="Ask something about your documents..." autocomplete="off" required />
-    <button type="submit" id="send-btn">Ask</button>
+    <button class="secondary" id="open-btn" type="button" data-only="questions" title="Prebere tekst iz datoteke v polje">Odpri datoteko</button>
+    <input type="file" id="open-input" accept=".pdf,.txt,.docx,.xls" />
+    <textarea id="input" rows="2" required></textarea>
+    <button type="submit" id="send-btn"></button>
   </form>
+  <div class="hint" id="hint"></div>
 </footer>
 
 <script>
 const chat = document.getElementById("chat");
 const form = document.getElementById("ask-form");
-const questionInput = document.getElementById("question");
+const input = document.getElementById("input");
 const sendBtn = document.getElementById("send-btn");
-const useLlmCheckbox = document.getElementById("use-llm");
-const uploadBtn = document.getElementById("upload-btn");
-const pdfInput = document.getElementById("pdf-input");
+const hint = document.getElementById("hint");
 const statusEl = document.getElementById("status");
+const useLlmCheckbox = document.getElementById("use-llm");
+const useContextCheckbox = document.getElementById("use-context");
+const topKInput = document.getElementById("top-k");
+const numQuestionsInput = document.getElementById("num-questions");
+const ingestBtn = document.getElementById("ingest-btn");
+const ingestInput = document.getElementById("ingest-input");
+const openBtn = document.getElementById("open-btn");
+const openInput = document.getElementById("open-input");
+
+fetch("/config").then(r => r.json()).then(c => {
+  topKInput.value = c.top_k;
+  if (c.retrieval) topKInput.parentElement.title += ` (iskanje: ${c.retrieval})`;
+}).catch(() => {});
+
+const MODES = {
+  answer: {
+    placeholder: "Vpiši vprašanje. Več vprašanj = vsako v svojo vrstico.",
+    button: "Odgovori",
+    hint: "Enter = pošlji, Shift+Enter = nova vrstica. Vsaka vrstica je svoje vprašanje.",
+  },
+  questions: {
+    placeholder: "Prilepi tekst, iz katerega naj sestavim vprašanja (ali klikni Odpri datoteko).",
+    button: "Sestavi vprašanja",
+    hint: "Ctrl/Cmd+Enter = pošlji. Vprašanja so odprta, vsako s kratkim odgovorom.",
+  },
+};
+let mode = "answer";
+try { mode = localStorage.getItem("rag-mode") || "answer"; } catch (e) {}
+if (!MODES[mode]) mode = "answer";
+
+function setMode(next) {
+  mode = next;
+  try { localStorage.setItem("rag-mode", mode); } catch (e) {}
+  document.querySelectorAll(".modes button").forEach(b => b.classList.toggle("active", b.dataset.mode === mode));
+  document.querySelectorAll("[data-only]").forEach(el => { el.hidden = el.dataset.only !== mode; });
+  input.placeholder = MODES[mode].placeholder;
+  sendBtn.textContent = MODES[mode].button;
+  hint.textContent = MODES[mode].hint;
+  input.rows = mode === "questions" ? 6 : 2;
+}
+document.querySelectorAll(".modes button").forEach(b => b.addEventListener("click", () => setMode(b.dataset.mode)));
+setMode(mode);
 
 function addMessage(role, text) {
   const el = document.createElement("div");
@@ -124,100 +186,199 @@ function addMessage(role, text) {
   return el;
 }
 
-function addBotAnswer(payload) {
+function addSources(el, contexts) {
+  if (!contexts || !contexts.length) return;
+  const sources = document.createElement("div");
+  sources.className = "sources";
+  const details = document.createElement("details");
+  const summary = document.createElement("summary");
+  summary.textContent = `Viri: ${contexts.length}`;
+  details.appendChild(summary);
+  contexts.forEach((ctx, i) => {
+    const p = document.createElement("div");
+    p.style.marginTop = "6px";
+    const src = (ctx.metadata && ctx.metadata.source) || "neznano";
+    p.textContent = `[${i + 1}] (${src}, score ${ctx.score.toFixed(3)}) ${ctx.text.slice(0, 240)}`;
+    details.appendChild(p);
+  });
+  sources.appendChild(details);
+  el.appendChild(sources);
+}
+
+function botBubble(tagText) {
   const el = document.createElement("div");
   el.className = "msg bot";
-
   const tag = document.createElement("div");
   tag.className = "mode-tag";
-  tag.textContent = payload.mode === "llm" ? "LLM answer" : "Extractive answer";
+  tag.textContent = tagText;
   el.appendChild(tag);
+  return el;
+}
 
+function addAnswer(payload) {
+  const el = botBubble(payload.mode === "llm" ? "Odgovor LLM" : "Odlomki iz baze (brez LLM)");
   const answer = document.createElement("div");
   answer.textContent = payload.answer;
   el.appendChild(answer);
-
-  if (payload.contexts && payload.contexts.length) {
-    const sources = document.createElement("div");
-    sources.className = "sources";
-    const details = document.createElement("details");
-    const summary = document.createElement("summary");
-    summary.textContent = `${payload.contexts.length} source chunk(s)`;
-    details.appendChild(summary);
-    payload.contexts.forEach((ctx, i) => {
-      const p = document.createElement("div");
-      p.style.marginTop = "6px";
-      const src = (ctx.metadata && ctx.metadata.source) || "unknown";
-      p.textContent = `[${i + 1}] (${src}, score ${ctx.score.toFixed(3)}) ${ctx.text.slice(0, 240)}`;
-      details.appendChild(p);
-    });
-    sources.appendChild(details);
-    el.appendChild(sources);
+  if (payload.llm_error) {
+    const err = document.createElement("div");
+    err.className = "hint";
+    err.textContent = "LLM ni dosegljiv: " + payload.llm_error;
+    el.appendChild(err);
   }
-
+  addSources(el, payload.contexts);
   chat.appendChild(el);
   chat.scrollTop = chat.scrollHeight;
 }
 
+function addQuestions(payload) {
+  const el = botBubble(`Vprašanja: ${payload.questions.length}`);
+  const list = document.createElement("ol");
+  list.className = "q-list";
+  payload.questions.forEach(item => {
+    const li = document.createElement("li");
+    const q = document.createElement("div");
+    q.className = "q";
+    q.textContent = item.question;
+    const a = document.createElement("div");
+    a.className = "a";
+    a.textContent = item.answer ? "Odgovor: " + item.answer : "";
+    li.append(q, a);
+    list.appendChild(li);
+  });
+  el.appendChild(list);
+  if (payload.text_truncated) {
+    const note = document.createElement("div");
+    note.className = "hint";
+    note.textContent = "Tekst je bil predolg, uporabljen je samo njegov začetek.";
+    el.appendChild(note);
+  }
+  const copy = document.createElement("button");
+  copy.className = "secondary copy-btn";
+  copy.type = "button";
+  copy.textContent = "Kopiraj";
+  copy.addEventListener("click", () => {
+    const text = payload.questions.map((it, i) => `${i + 1}. ${it.question}\nOdgovor: ${it.answer}`).join("\n\n");
+    navigator.clipboard.writeText(text).then(() => { copy.textContent = "Kopirano"; });
+  });
+  el.appendChild(copy);
+  addSources(el, payload.contexts);
+  chat.appendChild(el);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+async function postJson(url, body) {
+  const response = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  if (!response.ok) {
+    let detail = await response.text();
+    try { detail = JSON.parse(detail).detail || detail; } catch (e) {}
+    throw new Error(detail || response.statusText);
+  }
+  return response.json();
+}
+
+async function postFile(url, file) {
+  const formData = new FormData();
+  formData.append("file", file);
+  const response = await fetch(url, { method: "POST", body: formData });
+  if (!response.ok) {
+    let detail = await response.text();
+    try { detail = JSON.parse(detail).detail || detail; } catch (e) {}
+    throw new Error(detail || response.statusText);
+  }
+  return response.json();
+}
+
+const topK = () => parseInt(topKInput.value, 10) || undefined;
+
+async function runAnswers(text) {
+  const questions = text.split("\n").map(s => s.trim()).filter(Boolean);
+  for (let i = 0; i < questions.length; i++) {
+    addMessage("user", questions[i]);
+    statusEl.textContent = questions.length > 1 ? `Odgovarjam ${i + 1}/${questions.length}...` : "Razmišljam...";
+    try {
+      addAnswer(await postJson("/ask", { question: questions[i], top_k: topK(), use_llm: useLlmCheckbox.checked }));
+    } catch (error) {
+      addMessage("system", "Napaka: " + error.message);
+    }
+  }
+}
+
+async function runQuestions(text) {
+  addMessage("user", text.length > 400 ? text.slice(0, 400) + " …" : text);
+  statusEl.textContent = "Sestavljam vprašanja...";
+  try {
+    addQuestions(await postJson("/questions", {
+      text,
+      num_questions: parseInt(numQuestionsInput.value, 10) || 5,
+      top_k: topK(),
+      use_context: useContextCheckbox.checked,
+    }));
+  } catch (error) {
+    addMessage("system", "Napaka: " + error.message);
+  }
+}
+
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
-  const question = questionInput.value.trim();
-  if (!question) return;
-
-  addMessage("user", question);
-  questionInput.value = "";
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = "";
   sendBtn.disabled = true;
-  statusEl.textContent = "Thinking...";
-
   try {
-    const response = await fetch("/ask", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        question,
-        top_k: 4,
-        use_llm: useLlmCheckbox.checked,
-      }),
-    });
-    if (!response.ok) {
-      const errText = await response.text();
-      throw new Error(errText || response.statusText);
-    }
-    const payload = await response.json();
-    addBotAnswer(payload);
-  } catch (error) {
-    addMessage("system", "Error: " + error.message);
+    if (mode === "questions") await runQuestions(text);
+    else await runAnswers(text);
   } finally {
     sendBtn.disabled = false;
     statusEl.textContent = "";
+    input.focus();
   }
 });
 
-uploadBtn.addEventListener("click", () => pdfInput.click());
+input.addEventListener("keydown", (event) => {
+  if (event.key !== "Enter") return;
+  const submit = mode === "answer" ? !event.shiftKey : (event.ctrlKey || event.metaKey);
+  if (submit) {
+    event.preventDefault();
+    form.requestSubmit();
+  }
+});
 
-pdfInput.addEventListener("change", async () => {
-  const file = pdfInput.files[0];
+openBtn.addEventListener("click", () => openInput.click());
+openInput.addEventListener("change", async () => {
+  const file = openInput.files[0];
   if (!file) return;
-
-  statusEl.textContent = `Ingesting ${file.name}...`;
-  addMessage("system", `Uploading and ingesting: ${file.name}`);
-
-  const formData = new FormData();
-  formData.append("file", file);
-
+  statusEl.textContent = `Berem ${file.name}...`;
   try {
-    const response = await fetch("/ingest/pdf", { method: "POST", body: formData });
-    if (!response.ok) {
-      const errText = await response.text();
-      throw new Error(errText || response.statusText);
-    }
-    const payload = await response.json();
-    addMessage("system", `Ingested ${file.name}: ${payload.chunks_added} chunk(s) added.`);
+    const payload = await postFile("/extract", file);
+    input.value = payload.text;
+    addMessage("system", `Tekst iz ${file.name} je v polju (${payload.text.length} znakov). Klikni Sestavi vprašanja.`);
   } catch (error) {
-    addMessage("system", "Upload error: " + error.message);
+    addMessage("system", "Napaka pri branju: " + error.message);
   } finally {
     statusEl.textContent = "";
-    pdfInput.value = "";
+    openInput.value = "";
+  }
+});
+
+ingestBtn.addEventListener("click", () => ingestInput.click());
+ingestInput.addEventListener("change", async () => {
+  const file = ingestInput.files[0];
+  if (!file) return;
+  statusEl.textContent = `Dodajam ${file.name} v bazo...`;
+  try {
+    const extracted = await postFile("/extract", file);
+    const result = await postJson("/ingest/text", { text: extracted.text, source: file.name });
+    addMessage("system", `${file.name} dodan v bazo: ${result.chunks_added} kosov besedila.`);
+  } catch (error) {
+    addMessage("system", "Napaka pri dodajanju: " + error.message);
+  } finally {
+    statusEl.textContent = "";
+    ingestInput.value = "";
   }
 });
 </script>

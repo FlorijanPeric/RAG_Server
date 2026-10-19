@@ -1,0 +1,12 @@
+# GPU for the models container (NVIDIA Container Toolkit required).
+# scripts/start.sh adds this file automatically when Docker has the nvidia runtime
+# (MODELS_GPU=auto, default); MODELS_GPU=false disables it.
+services:
+  models:
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]

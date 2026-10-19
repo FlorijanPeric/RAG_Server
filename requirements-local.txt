@@ -1,0 +1,3 @@
+# Only needed for EMBEDDING_MODE=local or LLM_MODE=local (models loaded in-process).
+# Pulls in PyTorch + transformers (several GB).
+sentence-transformers>=3.2.1

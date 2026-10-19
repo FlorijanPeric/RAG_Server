@@ -1,51 +1,92 @@
-services:
-  qdrant:
-    image: qdrant/qdrant:latest
-    ports:
-      - "${QDRANT_HOST_PORT:-6333}:6333"
-    volumes:
-      - qdrant_data:/qdrant/storage
-    restart: unless-stopped
+# Three containers:
+#   models - Ollama serving the embedding model and the LLM
+#   web    - the web UI + API (FastAPI)
+#   qdrant - the vector database
+#
+# `models` only starts with the "models" profile. scripts/start.sh enables it
+# automatically when the embedder or the LLM uses it (OLLAMA_URL empty), and
+# skips it when both are taken from URLs.
 
-  ollama:
-    build: ./ollama
+services:
+  models:
+    build:
+      context: ./models
+      args:
+        # Set by scripts/start.sh when RERANK_MODE=api uses this container.
+        RERANKER: ${MODELS_RERANKER:-false}
+    profiles: ["models"]
     ports:
-      - "${OLLAMA_HOST_PORT:-11434}:11434"
+      - "${BIND_HOST:-0.0.0.0}:${OLLAMA_HOST_PORT:-11434}:11434"
     volumes:
       - ollama_data:/root/.ollama
+      - hf_cache:/root/.cache/huggingface
     environment:
-      OLLAMA_MODEL: ${OLLAMA_MODEL:-llama3.2}
+      # Pulled on startup; scripts/start.sh sets this to exactly what's needed.
+      OLLAMA_PULL: ${OLLAMA_PULL:-${OLLAMA_MODEL:-qwen3.5:4b} ${EMBEDDING_API_MODEL:-bge-m3}}
+      OLLAMA_KEEP_ALIVE: ${OLLAMA_KEEP_ALIVE:-30m}
+      RERANKER_ENABLED: ${MODELS_RERANKER:-false}
+      RERANK_MODEL: ${RERANK_MODEL:-BAAI/bge-reranker-v2-m3}
     restart: unless-stopped
-    # Uncomment to use an NVIDIA GPU (requires the NVIDIA Container Toolkit):
-    # deploy:
-    #   resources:
-    #     reservations:
-    #       devices:
-    #         - driver: nvidia
-    #           count: all
-    #           capabilities: [gpu]
+    # NVIDIA GPU: see docker-compose.gpu.yml (added automatically by scripts/start.sh).
 
-  rag-api:
-    build: .
+  web:
+    build:
+      context: .
+      args:
+        LOCAL_MODELS: ${LOCAL_MODELS:-false}
     ports:
-      - "${RAG_API_HOST_PORT:-8000}:8000"
+      - "${BIND_HOST:-0.0.0.0}:${RAG_API_HOST_PORT:-8000}:8000"
     environment:
-      EMBEDDING_MODE: ${EMBEDDING_MODE:-local}
+      EMBEDDING_MODE: ${EMBEDDING_MODE:-api}
       EMBEDDING_MODEL: ${EMBEDDING_MODEL:-sentence-transformers/all-MiniLM-L6-v2}
       EMBEDDING_API_URL: ${EMBEDDING_API_URL:-}
       EMBEDDING_API_KEY: ${EMBEDDING_API_KEY:-}
-      EMBEDDING_API_MODEL: ${EMBEDDING_API_MODEL:-}
-      QDRANT_URL: http://qdrant:6333
+      EMBEDDING_API_MODEL: ${EMBEDDING_API_MODEL:-bge-m3}
+      QDRANT_URL: ${QDRANT_URL:-http://qdrant:6333}
+      QDRANT_API_KEY: ${QDRANT_API_KEY:-}
       QDRANT_COLLECTION: ${QDRANT_COLLECTION:-Beees}
-      OLLAMA_URL: http://ollama:11434
-      OLLAMA_MODEL: ${OLLAMA_MODEL:-llama3.2}
+      TOP_K: ${TOP_K:-4}
+      RETRIEVAL_MODE: ${RETRIEVAL_MODE:-hybrid}
+      RERANK_MODE: ${RERANK_MODE:-off}
+      RERANK_MODEL: ${RERANK_MODEL:-BAAI/bge-reranker-v2-m3}
+      RERANK_API_URL: ${RERANK_API_URL:-}
+      RERANK_API_KEY: ${RERANK_API_KEY:-}
+      RERANK_CANDIDATES: ${RERANK_CANDIDATES:-20}
+      CHUNK_MAX_CHARS: ${CHUNK_MAX_CHARS:-300}
+      CHUNK_OVERLAP_SENTENCES: ${CHUNK_OVERLAP_SENTENCES:-1}
+      LLM_MODE: ${LLM_MODE:-ollama}
+      OLLAMA_URL: ${OLLAMA_URL:-http://models:11434}
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen3.5:4b}
+      LLM_API_URL: ${LLM_API_URL:-}
+      LLM_API_KEY: ${LLM_API_KEY:-}
+      LLM_API_MODEL: ${LLM_API_MODEL:-}
+      LLM_LOCAL_MODEL: ${LLM_LOCAL_MODEL:-Qwen/Qwen2.5-1.5B-Instruct}
+      LLM_MAX_NEW_TOKENS: ${LLM_MAX_NEW_TOKENS:-512}
+      LLM_TIMEOUT: ${LLM_TIMEOUT:-300}
+      LLM_THINK: ${LLM_THINK:-false}
       AUTO_INGEST_ENABLED: ${AUTO_INGEST_ENABLED:-true}
-      AUTO_INGEST_DIR: ${AUTO_INGEST_DIR:-dataset}
+      AUTO_INGEST_DIR: ${AUTO_INGEST_DIR:-dataset/data}
+    # Lets OLLAMA_URL / *_API_URL point at services on the host machine via
+    # http://host.docker.internal:PORT (works on Linux too, not only Docker Desktop).
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     volumes:
+      # Only used with LOCAL_MODELS=true (EMBEDDING_MODE=local / LLM_MODE=local / RERANK_MODE=local).
       - hf_cache:/root/.cache/huggingface
     depends_on:
-      - qdrant
-      - ollama
+      qdrant:
+        condition: service_started
+      models:
+        condition: service_started
+        required: false
+    restart: unless-stopped
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    ports:
+      - "${BIND_HOST:-0.0.0.0}:${QDRANT_HOST_PORT:-6333}:6333"
+    volumes:
+      - qdrant_data:/qdrant/storage
     restart: unless-stopped
 
 volumes:

@@ -16,6 +16,8 @@ EXCLUDES=(
   "dataset_text"
   "Jezikovne tehnologije"
   "package.sh"
+  ".qdrant"
+  "logs"
 )
 
 RSYNC_EXCLUDES=()

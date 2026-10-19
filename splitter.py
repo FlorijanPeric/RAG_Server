@@ -1,15 +1,24 @@
+import os
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+
+
+def _env_int(name: str, default: int) -> int:
+    value = (os.getenv(name) or "").strip()
+    return int(value) if value else default
 
 
 @dataclass
 class SplitterConfig:
-    max_chars: int = 400
+    # Smaller chunks = more precise retrieval; the LLM gets top_k of them as context.
+    # Changing CHUNK_MAX_CHARS only affects new ingests: re-initialize with
+    # scripts/init.sh --reset afterwards.
+    max_chars: int = field(default_factory=lambda: max(100, _env_int("CHUNK_MAX_CHARS", 300)))
     overlap: int = 100
     min_chunk_size: int = 50
     sentence_split_regex: str = r"(?<=[.!?])\s+"
     paragraph_split_regex: str = r"\n\s*\n"
-    overlap_sentences: int = 1
+    overlap_sentences: int = field(default_factory=lambda: max(0, _env_int("CHUNK_OVERLAP_SENTENCES", 1)))
 
 
 class TextSplitter:
@@ -23,7 +32,31 @@ class TextSplitter:
 
     def split_into_sentences(self, text):
         sentences = re.split(self.config.sentence_split_regex, text)
-        return [s.strip() for s in sentences if s.strip()]
+        units = []
+        for sentence in (s.strip() for s in sentences):
+            if not sentence:
+                continue
+            if len(sentence) <= self.config.max_chars:
+                units.append(sentence)
+            else:
+                # Tables and lists often have no sentence punctuation at all; cut such
+                # "sentences" into word windows so no chunk grows to thousands of chars.
+                units.extend(self._split_words(sentence))
+        return units
+
+    def _split_words(self, text):
+        pieces = []
+        current = []
+        current_length = 0
+        for word in text.split():
+            if current and current_length + 1 + len(word) > self.config.max_chars:
+                pieces.append(" ".join(current))
+                current, current_length = [], 0
+            current.append(word)
+            current_length += len(word) + (1 if current_length else 0)
+        if current:
+            pieces.append(" ".join(current))
+        return pieces
 
     def _chunk_units(self, units):
         chunks = []
@@ -45,6 +78,10 @@ class TextSplitter:
                 else:
                     current_units = []
                 current_length = len(" ".join(current_units))
+                # Drop the overlap if it would push the next chunk over the limit.
+                if current_units and current_length + 1 + unit_length > self.config.max_chars:
+                    current_units = []
+                    current_length = 0
 
             current_units.append(unit)
             current_length = len(" ".join(current_units))
